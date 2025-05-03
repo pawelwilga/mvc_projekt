@@ -1,0 +1,187 @@
+/* Ciemny motyw domyślny */
+body {
+    background-color: #343a40;
+    color: #f8f9fa;
+}
+.navbar {
+    background-color: #212529;
+}
+.navbar-dark .navbar-nav .nav-link {
+    color: #f8f9fa;
+}
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+.card {
+    background-color: #495057;
+    color: #f8f9fa;
+    border: none;
+}
+.accordion-item {
+    background-color: #495057;
+    color: #f8f9fa;
+    border: 1px solid #343a40;
+}
+.accordion-button {
+    background-color: #495057;
+    color: #f8f9fa;
+}
+.accordion-button:not(.collapsed) {
+    background-color: #343a40;
+    color: #f8f9fa;
+}
+/* Opcjonalny jasny motyw - do przełączania */
+.light-theme {
+    background-color: #f8f9fa;
+    color: #343a40;
+}
+.light-theme .navbar {
+    background-color: #e9ecef;
+}
+.light-theme .navbar-nav .nav-link {
+    color: #343a40;
+}
+.light-theme .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+}
+.light-theme .card {
+    background-color: #fff;
+    color: #343a40;
+    border: 1px solid #ced4da;
+}
+.light-theme .accordion-item {
+    background-color: #fff;
+    color: #343a40;
+    border: 1px solid #ced4da;
+}
+.light-theme .accordion-button {
+    background-color: #fff;
+    color: #343a40;
+}
+.light-theme .accordion-button:not(.collapsed) {
+    background-color: #e9ecef;
+    color: #343a40;
+}
+
+/* Style dla wykresów */
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 300px; /* Ustaw stałą wysokość dla lepszego układu */
+}
+
+/* Przyciski "Dodaj" w kafelkach */
+.card-controls {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+}
+.btn-sm-plus {
+    background: none;
+    border: none;
+    color: #6c757d;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+.btn-sm-plus:hover {
+    color: #f8f9fa;
+}
+
+/* Style dla listy przedsięwzięć */
+.project-list-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    justify-content: flex-start; /* Wyśrodkowanie elementów */
+}
+.project-list-item {
+    background-color: #495057;
+    color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Zmiana: przestrzeń między elementami */
+    align-items: flex-start; /* Zmiana: wyrównanie do początku */
+    border: 1px solid #6c757d;
+    position: relative; /* Potrzebne dla pozycjonowania elementów wewnętrznych */
+    overflow: hidden;
+    min-width: 180px; /* Minimalna szerokość dla każdego kafelka */
+    flex: 1; /* Równomierne rozłożenie na linii */
+}
+.project-list-item-title {
+    font-size: 0.7rem;
+    color: #adb5bd;
+    margin-bottom: 0.25rem;
+    align-self: flex-start; /* Zapewnia wyrównanie do lewej */
+}
+.project-list-item-balance {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    align-self: center; /* Zapewnia wyśrodkowanie */
+}
+.project-list-item-add {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    padding: 0.1rem 0.25rem;
+    font-size: 1rem; /* Zwiększenie rozmiaru ikony */
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Responsywność - siatka 2x2 dla wykresów na większych ekranach */
+@media (min-width: 992px) {
+    .chart-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 1rem;
+        width: 100%; /* Wykresy zajmują pełną szerokość */
+    }
+    .chart-grid .card {
+        margin-bottom: 0;
+        width: calc(50% - 0.5rem); /* Dwa wykresy w rzędzie z odstępem */
+    }
+    .chart-container {
+        height: 300px;
+    }
+}
+
+/* Dla małych ekranów (poniżej 768px) - jeden pod drugim */
+@media (max-width: 767.98px) {
+    .chart-grid {
+        flex-direction: column;
+    }
+    .chart-grid .card{
+        width: 100%;
+    }
+    .chart-container {
+        height: 300px;
+    }
+}
+
+/* Dla średnich ekranów (od 768px do 991.98px) - po jednym */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .chart-grid {
+        flex-direction: column;
+    }
+        .chart-grid .card{
+        width: 100%;
+    }
+    .chart-container {
+        height: 300px;
+    }
+}

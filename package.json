@@ -1,0 +1,28 @@
+{
+  "name": "manager_portfela",
+  "version": "1.0.0",
+  "description": "Projekt zaliczeniowy z przedmiotu \"Wzorzec MVC w aplikacjach internetowych",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pawelwilga/mvc_projekt.git"
+  },
+  "author": "Paweł Wilga <pawel@wilga.net.pl>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pawelwilga/mvc_projekt/issues"
+  },
+  "homepage": "https://github.com/pawelwilga/mvc_projekt#readme",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
