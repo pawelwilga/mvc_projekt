@@ -1,8 +1,8 @@
-
 const express = require("express");
 const bodyParser = require("body-parser");
 
 const homeRoutes = require('./routing/home');
+const userRoutes = require('./routing/user');
 
 const app = express();
 
@@ -22,6 +22,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/user', userRoutes);
 app.use('/', homeRoutes);
 
 app.use((request, response) => {
