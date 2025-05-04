@@ -1,7 +1,6 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
-const { render } = require("ejs");
 
 const homeRoutes = require('./routing/home');
 
@@ -15,6 +14,13 @@ app.set("views", "views");
 
 app.use(express.static('./public'));
 app.use(bodyParser.urlencoded({ extended: false }));
+
+// dodanie zmiennych dostępnych we wszystkich widokach
+app.use((req, res, next) => {
+  res.locals.profileCurrencyCode = "PLN";
+  res.locals.numberFormat = { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true };
+  next();
+});
 
 app.use('/', homeRoutes);
 

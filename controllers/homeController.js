@@ -1,9 +1,7 @@
 exports.getHomeView = (req, res) => {
     const totalIncome = 13585.27;
     const totalPayments = 7591.87;
-    const numberFormat = { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true };
-    const profileCurrencyCode = "PLN";
-  
+    
     // Dane dla wykresu wydatków
     const expensesData = {
       labels: ['Jedzenie', 'Transport', 'Rozrywka', 'Rachunki', 'Inne'],
@@ -92,8 +90,6 @@ exports.getHomeView = (req, res) => {
       totalIncome: totalIncome,
       totalPayments: totalPayments,
       totalBalance: (totalIncome - totalPayments),
-      profileCurrencyCode: profileCurrencyCode,
-      numberFormat: numberFormat,
       expensesConfig: JSON.stringify(expensesConfig), // Przekazujemy konfiguracje jako JSON
       incomeConfig: JSON.stringify(incomeConfig),
       monthlySummaryConfig: JSON.stringify(monthlySummaryConfig),
