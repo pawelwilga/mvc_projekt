@@ -1,0 +1,72 @@
+<div class="row mt-5">
+    <div class="col-md-6 m-auto">
+        <div class="card card-body bg-secondary text-light">
+            <h1 class="text-center mb-3 text-light">Zarejestruj się</h1> 
+            <form action="/register" method="POST">
+                <div class="mb-3">
+                    <label for="login" class="form-label">Login</label>
+                    <input
+                        type="text"
+                        id="login"
+                        name="login"
+                        class="form-control"
+                        placeholder="Wpisz login" <%-- Zmieniono na polski --%>
+                        value="<%= typeof login != 'undefined' ? login : '' %>"
+                        required
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        class="form-control"
+                        placeholder="Wpisz email" <%-- Zmieniono na polski --%>
+                        value="<%= typeof email != 'undefined' ? email : '' %>"
+                        required
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Haslo</label> <%-- Zmieniono na polski --%>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        class="form-control"
+                        placeholder="Utworz haslo" <%-- Zmieniono na polski --%>
+                        value="<%= typeof password != 'undefined' ? password : '' %>"
+                        required
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="password2" class="form-label">Potwierdz haslo</label> <%-- Zmieniono na polski --%>
+                    <input
+                        type="password"
+                        id="password2"
+                        name="password2"
+                        class="form-control"
+                        placeholder="Potwierdz haslo" <%-- Zmieniono na polski --%>
+                        value="<%= typeof password2 != 'undefined' ? password2 : '' %>"
+                        required
+                    />
+                </div>
+                 <div class="mb-3">
+                    <label for="defaultCurrency" class="form-label">Waluta domyslna</label> <%-- Zmieniono na polski --%>
+                    <select id="defaultCurrency" name="defaultCurrency" class="form-select" required>
+                        <option value="">Wybierz walute</option> <%-- Zmieniono na polski --%>
+                        <option value="PLN" <%= typeof defaultCurrency != 'undefined' && defaultCurrency === 'PLN' ? 'selected' : '' %>>PLN</option>
+                        <option value="USD" <%= typeof defaultCurrency != 'undefined' && defaultCurrency === 'USD' ? 'selected' : '' %>>USD</option>
+                        <option value="EUR" <%= typeof defaultCurrency != 'undefined' && defaultCurrency === 'EUR' ? 'selected' : '' %>>EUR</option>
+                    </select>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Zarejestruj</button> <%-- Zmieniono na polski --%>
+                </div>
+            </form>
+            <p class="lead mt-4 text-center">
+                Masz juz konto? <a href="/login">Zaloguj sie</a> <%-- Zmieniono na polski --%>
+            </p>
+        </div>
+    </div>
+</div>

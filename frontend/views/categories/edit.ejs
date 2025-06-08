@@ -1,0 +1,46 @@
+<div class="row mt-5">
+    <div class="col-md-6 m-auto">
+        <div class="card card-body bg-secondary text-light">
+            <h1 class="text-center mb-3 text-light">Edytuj Kategorię</h1>
+            <form action="/categories/edit/<%= category._id %>" method="POST">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nazwa Kategorii</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        class="form-control"
+                        placeholder="Wpisz nazwę kategorii"
+                        value="<%= category.name %>"
+                        required
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="color" class="form-label">Kolor (opcjonalnie)</label>
+                    <input
+                        type="color"
+                        id="color"
+                        name="color"
+                        class="form-control form-control-color"
+                        value="<%= category.color || '#495057' %>"
+                    />
+                    <small class="form-text text-muted">Wybierz kolor dla tej kategorii (np. do wykresów).</small>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Opis (opcjonalnie)</label>
+                    <textarea
+                        id="description"
+                        name="description"
+                        class="form-control"
+                        rows="3"
+                        placeholder="Krótki opis kategorii"
+                    ><%= category.description || '' %></textarea>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Zapisz Zmiany</button>
+                    <a href="/categories" class="btn btn-secondary">Anuluj</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

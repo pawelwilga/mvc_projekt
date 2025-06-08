@@ -1,0 +1,39 @@
+<div class="row mt-5">
+    <div class="col-md-6 m-auto">
+        <div class="card card-body bg-secondary text-light">
+            <h1 class="text-center mb-3 text-light">Zaloguj sie</h1> 
+            <form action="/login" method="POST">
+                <div class="mb-3">
+                    <label for="login" class="form-label">Login</label>
+                    <input
+                        type="text"
+                        id="login"
+                        name="login"
+                        class="form-control"
+                        placeholder="Wpisz login" 
+                        value="<%= typeof login != 'undefined' ? login : '' %>"
+                        required
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Haslo</label> 
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        class="form-control"
+                        placeholder="Wpisz haslo" 
+                        value="<%= typeof password != 'undefined' ? password : '' %>"
+                        required
+                    />
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Zaloguj</button> 
+                </div>
+            </form>
+            <p class="lead mt-4 text-center">
+                Nie masz konta? <a href="/register">Zarejestruj sie</a> 
+            </p>
+        </div>
+    </div>
+</div>
