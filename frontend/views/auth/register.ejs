@@ -10,7 +10,7 @@
                         id="login"
                         name="login"
                         class="form-control"
-                        placeholder="Wpisz login" <%-- Zmieniono na polski --%>
+                        placeholder="Wpisz login"
                         value="<%= typeof login != 'undefined' ? login : '' %>"
                         required
                     />
@@ -22,50 +22,50 @@
                         id="email"
                         name="email"
                         class="form-control"
-                        placeholder="Wpisz email" <%-- Zmieniono na polski --%>
+                        placeholder="Wpisz email"
                         value="<%= typeof email != 'undefined' ? email : '' %>"
                         required
                     />
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Haslo</label> <%-- Zmieniono na polski --%>
+                    <label for="password" class="form-label">Haslo</label>
                     <input
                         type="password"
                         id="password"
                         name="password"
                         class="form-control"
-                        placeholder="Utworz haslo" <%-- Zmieniono na polski --%>
+                        placeholder="Utworz haslo"
                         value="<%= typeof password != 'undefined' ? password : '' %>"
                         required
                     />
                 </div>
                 <div class="mb-3">
-                    <label for="password2" class="form-label">Potwierdz haslo</label> <%-- Zmieniono na polski --%>
+                    <label for="password2" class="form-label">Potwierdz haslo</label>
                     <input
                         type="password"
                         id="password2"
                         name="password2"
                         class="form-control"
-                        placeholder="Potwierdz haslo" <%-- Zmieniono na polski --%>
+                        placeholder="Potwierdz haslo"
                         value="<%= typeof password2 != 'undefined' ? password2 : '' %>"
                         required
                     />
                 </div>
                  <div class="mb-3">
-                    <label for="defaultCurrency" class="form-label">Waluta domyslna</label> <%-- Zmieniono na polski --%>
+                    <label for="defaultCurrency" class="form-label">Waluta domyslna</label>
                     <select id="defaultCurrency" name="defaultCurrency" class="form-select" required>
-                        <option value="">Wybierz walute</option> <%-- Zmieniono na polski --%>
+                        <option value="">Wybierz walute</option>
                         <option value="PLN" <%= typeof defaultCurrency != 'undefined' && defaultCurrency === 'PLN' ? 'selected' : '' %>>PLN</option>
                         <option value="USD" <%= typeof defaultCurrency != 'undefined' && defaultCurrency === 'USD' ? 'selected' : '' %>>USD</option>
                         <option value="EUR" <%= typeof defaultCurrency != 'undefined' && defaultCurrency === 'EUR' ? 'selected' : '' %>>EUR</option>
                     </select>
                 </div>
                 <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-primary">Zarejestruj</button> <%-- Zmieniono na polski --%>
+                    <button type="submit" class="btn btn-primary">Zarejestruj</button>
                 </div>
             </form>
             <p class="lead mt-4 text-center">
-                Masz juz konto? <a href="/login">Zaloguj sie</a> <%-- Zmieniono na polski --%>
+                Masz juz konto? <a href="/login">Zaloguj sie</a>
             </p>
         </div>
     </div>
