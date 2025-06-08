@@ -1,18 +1,26 @@
 const Transaction = require("../models/Transaction");
 const Account = require("../models/Account"); 
 const { STATUS_CODE } = require("../constants/statusCode");
+const { ObjectId } = require('mongodb');
 
 async function checkAccountAccess(accountId, userId, accessLevel = 'read') {
-    const account = await Account.findById(accountId);
+    
+    const account = await Account.findById(accountId, userId);
+
+    console.log(account);
     if (!account) {
         return false; 
     }
 
-    if (account.ownerId.equals(userId)) {
+    const userObjectId = new ObjectId(userId);
+
+    console.log(`porównuję ${account.ownerId} do ${userObjectId}`);
+
+    if (account.ownerId.equals(userObjectId)) {
         return true;
     }
 
-    const sharedAccess = account.sharedWith.find(s => s.userId.equals(userId));
+    const sharedAccess = account.sharedWith.find(s => s.userId.equals(userObjectId));
     if (sharedAccess) {
         if (accessLevel === 'read' && (sharedAccess.accessLevel === 'read' || sharedAccess.accessLevel === 'full')) {
             return true;
@@ -30,6 +38,8 @@ exports.getTransactions = async (request, response) => {
 
   try {
     if (!(await checkAccountAccess(accountId, userId, 'read'))) {
+      const cRes = await checkAccountAccess(accountId, userId, 'read');
+      console.log(`wynik sprawdzenia: ${cRes}`);
       return response.status(STATUS_CODE.FORBIDDEN).json({ message: "Access denied to this account's transactions." });
     }
 
@@ -223,7 +233,7 @@ exports.addTransaction = async (request, response) => {
 
     } else if (type === 'income' || type === 'expense') {
         const newTransactionData = {
-            accountId: accountId,
+            accountId: new ObjectId(accountId),
             type: type,
             category: category,
             amount: amount,

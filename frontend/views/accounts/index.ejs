@@ -31,6 +31,7 @@
                     <td><%= account.type === 'personal' ? 'Osobiste' : (account.type === 'savings' ? 'Oszczędnościowe' : 'Inne') %></td>
                     <td><%= account.description || 'Brak opisu' %></td>
                     <td>
+                        <a href="/accounts/<%= account._id %>/transactions" class="btn btn-sm btn-primary me-2">Transakcje</a>
                         <a href="/accounts/edit/<%= account._id %>" class="btn btn-sm btn-warning me-2">Edytuj</a>
                         <a href="/accounts/share/<%= account._id %>" class="btn btn-sm btn-info me-2">Udostępnij</a>
                         <form action="/accounts/delete/<%= account._id %>" method="POST" class="d-inline" onsubmit="return confirm('Czy na pewno chcesz usunąć to konto?');">

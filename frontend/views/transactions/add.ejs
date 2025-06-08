@@ -1,0 +1,117 @@
+<div class="row mt-5">
+    <div class="col-md-8 m-auto">
+        <div class="card card-body bg-secondary text-light">
+            <h1 class="text-center mb-3 text-light">Dodaj Transakcję do konta: <%= account.name %> (<%= account.currency %>)</h1>
+            <form action="/accounts/<%= account._id %>/transactions/add" method="POST">
+                <div class="mb-3">
+                    <label for="type" class="form-label">Typ Transakcji</label>
+                    <select id="type" name="type" class="form-select" required onchange="toggleTransactionFields()">
+                        <option value="expense" <%= typeof type !== 'undefined' && type === 'expense' ? 'selected' : '' %>>Wydatek</option>
+                        <option value="income" <%= typeof type !== 'undefined' && type === 'income' ? 'selected' : '' %>>Przychód</option>
+                        <option value="transfer" <%= typeof type !== 'undefined' && type === 'transfer' ? 'selected' : '' %>>Transfer</option>
+                    </select>
+                </div>
+
+                <div class="mb-3" id="categoryField">
+                    <label for="category" class="form-label">Kategoria</label>
+                    <select id="category" name="category" class="form-select">
+                        <option value="">Wybierz kategorię</option>
+                        <% categories.forEach(cat => { %>
+                            <option value="<%= cat._id %>" <%= typeof category !== 'undefined' && category === cat._id.toString() ? 'selected' : '' %>>
+                                <%= cat.name %>
+                            </option>
+                        <% }) %>
+                    </select>
+                </div>
+
+                <div class="mb-3" id="senderAccountField">
+                    <label for="senderAccountId" class="form-label">Konto Nadawcy</label>
+                    <select id="senderAccountId" name="senderAccountId" class="form-select">
+                        <option value="">Wybierz konto nadawcy</option>
+                        <option value="<%= account._id %>" selected><%= account.name %></option>
+                        <% userAccounts.forEach(acc => { %>
+                            <option value="<%= acc._id %>" <%= typeof senderAccountId !== 'undefined' && senderAccountId === acc._id.toString() ? 'selected' : '' %>>
+                                <%= acc.name %>
+                            </option>
+                        <% }) %>
+                    </select>
+                </div>
+
+                <div class="mb-3" id="receiverAccountField">
+                    <label for="receiverAccountId" class="form-label">Konto Odbiorcy</label>
+                    <select id="receiverAccountId" name="receiverAccountId" class="form-select">
+                        <option value="">Wybierz konto odbiorcy</option>
+                        <option value="<%= account._id %>" <%= typeof receiverAccountId !== 'undefined' && receiverAccountId === account._id.toString() ? 'selected' : '' %>>
+                            <%= account.name %>
+                        </option>
+                        <% userAccounts.forEach(acc => { %>
+                            <option value="<%= acc._id %>" <%= typeof receiverAccountId !== 'undefined' && receiverAccountId === acc._id.toString() ? 'selected' : '' %>>
+                                <%= acc.name %>
+                            </option>
+                        <% }) %>
+                    </select>
+                </div>
+
+
+                <div class="mb-3">
+                    <label for="amount" class="form-label">Kwota (<%= account.currency %>)</label>
+                    <input
+                        type="number"
+                        id="amount"
+                        name="amount"
+                        class="form-control"
+                        step="0.01"
+                        placeholder="0.00"
+                        value="<%= typeof amount !== 'undefined' ? amount : '' %>"
+                        required
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Opis (opcjonalnie)</label>
+                    <textarea
+                        id="description"
+                        name="description"
+                        class="form-control"
+                        rows="3"
+                        placeholder="Krótki opis transakcji"
+                    ><%= typeof description !== 'undefined' ? description : '' %></textarea>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Dodaj Transakcję</button>
+                    <a href="/accounts/<%= account._id %>/transactions" class="btn btn-secondary">Anuluj</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleTransactionFields() {
+        const type = document.getElementById('type').value;
+        const categoryField = document.getElementById('categoryField');
+        const senderAccountField = document.getElementById('senderAccountField');
+        const receiverAccountField = document.getElementById('receiverAccountField');
+        const categorySelect = document.getElementById('category');
+        const senderAccountSelect = document.getElementById('senderAccountId');
+        const receiverAccountSelect = document.getElementById('receiverAccountId');
+
+        if (type === 'transfer') {
+            categoryField.style.display = 'none';
+            senderAccountField.style.display = 'block';
+            receiverAccountField.style.display = 'block';
+            categorySelect.removeAttribute('required');
+            senderAccountSelect.setAttribute('required', 'required');
+            receiverAccountSelect.setAttribute('required', 'required');
+        } else {
+            categoryField.style.display = 'block';
+            senderAccountField.style.display = 'none';
+            receiverAccountField.style.display = 'none';
+            categorySelect.setAttribute('required', 'required');
+            senderAccountSelect.removeAttribute('required');
+            receiverAccountSelect.removeAttribute('required');
+        }
+    }
+
+    // Wywołaj funkcję przy ładowaniu strony, aby ustawić początkowy stan
+    document.addEventListener('DOMContentLoaded', toggleTransactionFields);
+</script>

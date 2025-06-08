@@ -1,0 +1,76 @@
+<div class="mt-4">
+    <h1 class="text-light">Transakcje dla konta: <%= account.name %> (<%= account.currency %>)</h1>
+    <p class="lead text-light">Lista wszystkich transakcji dla tego konta.</p>
+    <hr>
+
+    <div class="d-flex justify-content-between mb-3">
+        <a href="/accounts" class="btn btn-secondary">Powrót do Kont</a>
+        <a href="/accounts/<%= account._id %>/transactions/add" class="btn btn-success">Dodaj Nową Transakcję</a>
+    </div>
+
+    <% if (transactions && transactions.length > 0) { %>
+    <div class="table-responsive">
+        <table class="table table-dark table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Typ</th>
+                    <th scope="col">Kategoria</th>
+                    <th scope="col">Kwota</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Opis</th>
+                    <th scope="col">Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% transactions.forEach(transaction => { %>
+                <tr>
+                    <td>
+                        <% if (transaction.type === 'income') { %>
+                            <span class="badge bg-success">Przychód</span>
+                        <% } else if (transaction.type === 'expense') { %>
+                            <span class="badge bg-danger">Wydatek</span>
+                        <% } else if (transaction.type === 'transfer') { %>
+                            <span class="badge bg-info">Transfer</span>
+                        <% } %>
+                    </td>
+                    <td><%= transaction.categoryName || 'N/A' %></td>
+                    <td>
+                        <% if (transaction.type === 'income' || (transaction.type === 'transfer' && transaction.receiverAccountId && transaction.receiverAccountId.toString() === account._id.toString())) { %>
+                            <span class="text-success">+<%= transaction.amount.toFixed(2) %> <%= account.currency %></span>
+                        <% } else if (transaction.type === 'expense' || (transaction.type === 'transfer' && transaction.senderAccountId && transaction.senderAccountId.toString() === account._id.toString())) { %>
+                            <span class="text-danger">-<%= transaction.amount.toFixed(2) %> <%= account.currency %></span>
+                        <% } else { %>
+                            <%= transaction.amount.toFixed(2) %> <%= account.currency %>
+                        <% } %>
+                    </td>
+                    <td><%= transaction.formattedDate %></td>
+                    <td>
+                        <% if (transaction.type === 'transfer' && transaction.senderAccountId && transaction.receiverAccountId) { %>
+                            <% if (transaction.senderAccountId.toString() === account._id.toString()) { %>
+                                Transfer z <%= account.name %> do <%= transaction.receiverAccountId %>
+                            <% } else if (transaction.receiverAccountId.toString() === account._id.toString()) { %>
+                                Transfer do <%= account.name %> z <%= transaction.senderAccountId %>
+                            <% } else { %>
+                                <%= transaction.description || 'Brak opisu' %>
+                            <% } %>
+                        <% } else { %>
+                            <%= transaction.description || 'Brak opisu' %>
+                        <% } %>
+                    </td>
+                    <td>
+                        <a href="/accounts/<%= account._id %>/transactions/edit/<%= transaction._id %>" class="btn btn-sm btn-warning me-2">Edytuj</a>
+                        <form action="/accounts/<%= account._id %>/transactions/delete/<%= transaction._id %>" method="POST" class="d-inline" onsubmit="return confirm('Czy na pewno chcesz usunąć tę transakcję? Spowoduje to również skorygowanie salda konta.');">
+                            <button type="submit" class="btn btn-sm btn-danger">Usuń</button>
+                        </form>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+    <% } else { %>
+    <div class="alert alert-info text-dark" role="alert">
+        Brak transakcji dla tego konta. <a href="/accounts/<%= account._id %>/transactions/add" class="alert-link">Dodaj pierwszą transakcję!</a>
+    </div>
+    <% } %>
+</div>

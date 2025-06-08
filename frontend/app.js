@@ -10,6 +10,7 @@ const expressLayouts = require('express-ejs-layouts');
 const authRoutes = require('./routes/authRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const accountRoutes = require('./routes/accountRoutes');
+const transactionRoutes = require('./routes/transactionRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -43,6 +44,7 @@ app.use((req, res, next) => {
 app.use('/', authRoutes);
 app.use('/categories', categoryRoutes);
 app.use('/accounts', accountRoutes);
+app.use('/accounts', transactionRoutes);
 
 app.get('/', (req, res) => {
     res.render('index', { title: 'Finance manager' });

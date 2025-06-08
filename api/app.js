@@ -19,7 +19,7 @@ app.use(express.json());
 app.use("/api/users/", userRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/accounts', accountRoutes);
-app.use('/api/transactions', transactionRoutes);
+app.use('/api/accounts/:accountId/transactions', transactionRoutes);
 
 
 mongoConnect(() => {
