@@ -1,0 +1,50 @@
+<div class="mt-4">
+    <h1 class="text-light">Twoje Konta</h1>
+    <p class="lead text-light">Zarządzaj swoimi kontami bankowymi i innymi źródłami finansów.</p>
+    <hr>
+
+    <div class="d-flex justify-content-end mb-3">
+        <a href="/accounts/add" class="btn btn-success">Dodaj Nowe Konto</a>
+    </div>
+
+    <% if (accounts && accounts.length > 0) { %>
+    <div class="table-responsive">
+        <table class="table table-dark table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Nazwa</th>
+                    <th scope="col">Saldo</th>
+                    <th scope="col">Waluta</th>
+                    <th scope="col">Numer Konta</th>
+                    <th scope="col">Typ</th>
+                    <th scope="col">Opis</th>
+                    <th scope="col">Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% accounts.forEach(account => { %>
+                <tr>
+                    <td><%= account.name %></td>
+                    <td><%= account.balance.toFixed(2) %></td>
+                    <td><%= account.currency %></td>
+                    <td><%= account.accountNumber || 'Brak' %></td>
+                    <td><%= account.type === 'personal' ? 'Osobiste' : (account.type === 'savings' ? 'Oszczędnościowe' : 'Inne') %></td>
+                    <td><%= account.description || 'Brak opisu' %></td>
+                    <td>
+                        <a href="/accounts/edit/<%= account._id %>" class="btn btn-sm btn-warning me-2">Edytuj</a>
+                        <a href="/accounts/share/<%= account._id %>" class="btn btn-sm btn-info me-2">Udostępnij</a>
+                        <form action="/accounts/delete/<%= account._id %>" method="POST" class="d-inline" onsubmit="return confirm('Czy na pewno chcesz usunąć to konto?');">
+                            <button type="submit" class="btn btn-sm btn-danger">Usuń</button>
+                        </form>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+    <% } else { %>
+    <div class="alert alert-info text-dark" role="alert">
+        Brak zdefiniowanych kont. <a href="/accounts/add" class="alert-link">Dodaj pierwsze konto!</a>
+    </div>
+    <% } %>
+</div>

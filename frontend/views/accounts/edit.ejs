@@ -1,0 +1,113 @@
+<div class="row mt-5">
+    <div class="col-md-8 m-auto">
+        <div class="card card-body bg-secondary text-light">
+            <h1 class="text-center mb-3 text-light">Edytuj Konto: <%= account.name %></h1>
+            <form action="/accounts/edit/<%= account._id %>" method="POST">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nazwa Konta</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        class="form-control"
+                        placeholder="Wpisz nazwę konta"
+                        value="<%= account.name %>"
+                        required
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="balance" class="form-label">Saldo</label>
+                    <input
+                        type="number"
+                        id="balance"
+                        name="balance"
+                        class="form-control"
+                        step="0.01"
+                        value="<%= account.balance.toFixed(2) %>"
+                        required
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="currency" class="form-label">Waluta</label>
+                    <select id="currency" name="currency" class="form-select" required>
+                        <option value="PLN" <%= account.currency === 'PLN' ? 'selected' : '' %>>PLN</option>
+                        <option value="USD" <%= account.currency === 'USD' ? 'selected' : '' %>>USD</option>
+                        <option value="EUR" <%= account.currency === 'EUR' ? 'selected' : '' %>>EUR</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="accountNumber" class="form-label">Numer Konta (opcjonalnie)</label>
+                    <input
+                        type="text"
+                        id="accountNumber"
+                        name="accountNumber"
+                        class="form-control"
+                        placeholder="Np. PLXX XXXX XXXX XXXX XXXX XXXX XXXX"
+                        value="<%= account.accountNumber || '' %>"
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="type" class="form-label">Typ Konta</label>
+                    <select id="type" name="type" class="form-select" required>
+                        <option value="personal" <%= account.type === 'personal' ? 'selected' : '' %>>Osobiste</option>
+                        <option value="savings" <%= account.type === 'savings' ? 'selected' : '' %>>Oszczędnościowe</option>
+                        <option value="business" <%= account.type === 'business' ? 'selected' : '' %>>Firmowe</option>
+                        <option value="other" <%= account.type === 'other' ? 'selected' : '' %>>Inne</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Opis (opcjonalnie)</label>
+                    <textarea
+                        id="description"
+                        name="description"
+                        class="form-control"
+                        rows="3"
+                        placeholder="Krótki opis konta"
+                    ><%= account.description || '' %></textarea>
+                </div>
+                <div class="d-grid gap-2 mb-3">
+                    <button type="submit" class="btn btn-primary">Zapisz Zmiany</button>
+                    <a href="/accounts" class="btn btn-secondary">Anuluj</a>
+                </div>
+            </form>
+
+            <hr class="text-light">
+
+            <h2 class="text-light mt-4">Współdzielenie Konta</h2>
+            <% if (account.ownerId.toString() === user._id.toString()) { %>
+                <form action="/accounts/share/<%= account._id %>" method="GET" class="d-grid gap-2 mb-3">
+                    <button type="submit" class="btn btn-info">Udostępnij to Konto</button>
+                </form>
+
+                <% if (account.sharedWith && account.sharedWith.length > 0) { %>
+                    <h3 class="text-light mt-4">Udostępnione dla:</h3>
+                    <ul class="list-group mb-3">
+                        <% account.sharedWith.forEach(sharedUser => { %>
+                            <li class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center">
+                                <%= sharedUser.userId %> (ID) - Dostęp:
+                                <form action="/accounts/<%= account._id %>/share/<%= sharedUser.userId %>/update" method="POST" class="d-inline-flex align-items-center">
+                                    <select name="accessLevel" class="form-select form-select-sm me-2">
+                                        <option value="read" <%= sharedUser.accessLevel === 'read' ? 'selected' : '' %>>Tylko odczyt</option>
+                                        <option value="write" <%= sharedUser.accessLevel === 'write' ? 'selected' : '' %>>Odczyt/Zapis</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-sm btn-outline-warning me-2">Zmień dostęp</button>
+                                </form>
+                                <form action="/accounts/<%= account._id %>/share/<%= sharedUser.userId %>/remove" method="POST" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" onsubmit="return confirm('Czy na pewno chcesz usunąć tego użytkownika?');">Usuń</button>
+                                </form>
+                            </li>
+                        <% }) %>
+                    </ul>
+                <% } else { %>
+                    <div class="alert alert-info text-dark" role="alert">
+                        To konto nie jest obecnie nikomu udostępnione.
+                    </div>
+                <% } %>
+            <% } else { %>
+                <div class="alert alert-warning text-dark" role="alert">
+                    Tylko właściciel konta może zarządzać jego udostępnianiem. Twój poziom dostępu: **<%= account.accessLevel || 'Brak' %>**.
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>

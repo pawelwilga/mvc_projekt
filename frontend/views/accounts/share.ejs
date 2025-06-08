@@ -1,0 +1,32 @@
+<div class="row mt-5">
+    <div class="col-md-6 m-auto">
+        <div class="card card-body bg-secondary text-light">
+            <h1 class="text-center mb-3 text-light">Udostępnij Konto: <%= account.name %></h1>
+            <p class="text-light">Udostępnij to konto innemu użytkownikowi, wpisując jego adres e-mail i wybierając poziom dostępu.</p>
+            <form action="/accounts/share/<%= account._id %>" method="POST">
+                <div class="mb-3">
+                    <label for="email" class="form-label">E-mail użytkownika</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        class="form-control"
+                        placeholder="Wprowadź email użytkownika"
+                        required
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="accessLevel" class="form-label">Poziom Dostępu</label>
+                    <select id="accessLevel" name="accessLevel" class="form-select" required>
+                        <option value="read">Tylko odczyt</option>
+                        <option value="write">Odczyt i zapis</option>
+                    </select>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Udostępnij Konto</button>
+                    <a href="/accounts/edit/<%= account._id %>" class="btn btn-secondary">Anuluj</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
