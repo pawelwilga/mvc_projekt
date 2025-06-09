@@ -38,7 +38,6 @@ exports.renderTransactionsPage = async (req, res) => {
     }
 };
 
-
 exports.renderAddTransactionPage = async (req, res) => {
     const { accountId } = req.params;
     try {
@@ -66,7 +65,6 @@ exports.renderAddTransactionPage = async (req, res) => {
         res.redirect(`/accounts/${accountId}/transactions`);
     }
 };
-
 
 exports.addTransaction = async (req, res) => {
     const { accountId } = req.params;
@@ -169,7 +167,6 @@ exports.addTransaction = async (req, res) => {
     }
 };
 
-
 exports.renderEditTransactionPage = async (req, res) => {
     const { accountId, transactionId } = req.params;
     try {
@@ -180,7 +177,7 @@ exports.renderEditTransactionPage = async (req, res) => {
         }
 
         
-        const transaction = await Transaction.getById(transactionId, req.session.token);
+        const transaction = await Transaction.getById(accountId, transactionId, req.session.token);
         if (!transaction) {
             req.flash('error_msg', 'Transakcja nie znaleziona.');
             return res.redirect(`/accounts/${accountId}/transactions`);
@@ -208,7 +205,6 @@ exports.renderEditTransactionPage = async (req, res) => {
         res.redirect(`/accounts/${accountId}/transactions`);
     }
 };
-
 
 exports.updateTransaction = async (req, res) => {
     const { accountId, transactionId } = req.params;
@@ -289,7 +285,7 @@ exports.updateTransaction = async (req, res) => {
         }
 
         
-        await Transaction.update(transactionId, updateData, req.session.token);
+        await Transaction.update(accountId, transactionId, updateData, req.session.token);
         req.flash('success_msg', 'Transakcja została zaktualizowana pomyślnie!');
         res.redirect(`/accounts/${accountId}/transactions`);
     } catch (error) {
